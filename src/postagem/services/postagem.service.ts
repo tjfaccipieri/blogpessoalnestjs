@@ -47,11 +47,11 @@ export class PostagemService {
   }
 
   async create(postagem: Postagem): Promise<Postagem> {
-    if(postagem.tema) {
-      let tema = await this.temaService.findById(postagem.tema.id)
+    if (postagem.tema) {
+      let tema = await this.temaService.findById(postagem.tema.id);
 
-      if(!tema) {
-        throw new HttpException('Tema não encontrado', HttpStatus.NOT_FOUND)
+      if (!tema) {
+        throw new HttpException('Tema não encontrado', HttpStatus.NOT_FOUND);
       }
       return await this.postagemRepository.save(postagem);
     }
@@ -66,10 +66,10 @@ export class PostagemService {
     }
 
     if (postagem.tema) {
-      let tema = await this.temaService.findById(postagem.tema.id)
+      let tema = await this.temaService.findById(postagem.tema.id);
 
-      if(!tema) {
-        throw new HttpException('Tema não encontrado', HttpStatus.NOT_FOUND)
+      if (!tema) {
+        throw new HttpException('Tema não encontrado', HttpStatus.NOT_FOUND);
       }
 
       return await this.postagemRepository.save(postagem);
