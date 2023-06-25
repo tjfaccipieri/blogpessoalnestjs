@@ -5,38 +5,45 @@ import {
   UpdateDateColumn,
   ManyToOne,
 } from 'typeorm';
-import {IsNotEmpty } from 'class-validator'
+import { IsNotEmpty } from 'class-validator';
 import { Tema } from 'src/tema/entities/tema.entity';
 import { Usuario } from 'src/usuario/entities/usuario.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity({ name: 'tb_postagens' })
 export class Postagem {
   @PrimaryGeneratedColumn()
+  @ApiProperty()
   id: number;
 
   @IsNotEmpty()
-  @Column({length: 100, nullable: false})
-  titulo: string
-  
-  @IsNotEmpty()
-  @Column({length: 1000, nullable: false})
-  texto: string
+  @ApiProperty()
+  @Column({ length: 100, nullable: false })
+  titulo: string;
 
   @IsNotEmpty()
-  @Column({length: 5000, nullable: true})
-  anexo: string
+  @ApiProperty()
+  @Column({ length: 1000, nullable: false })
+  texto: string;
+
+  @IsNotEmpty()
+  @ApiProperty()
+  @Column({ length: 5000, nullable: true })
+  anexo: string;
 
   @UpdateDateColumn()
-  data: Date
+  @ApiProperty()
+  data: Date;
 
   @ManyToOne(() => Tema, (tema) => tema.postagem, {
-    onDelete: 'CASCADE'
+    onDelete: 'CASCADE',
   })
-  tema: Tema
-  
-  @ManyToOne(() => Usuario, (usuario) => usuario.postagem, {
-    onDelete: 'CASCADE'
-  })
-  usuario: Usuario
+  @ApiProperty({type: () => Tema})
+  tema: Tema;
 
+  @ManyToOne(() => Usuario, (usuario) => usuario.postagem, {
+    onDelete: 'CASCADE',
+  })
+  @ApiProperty({type: () => Usuario})
+  usuario: Usuario;
 }
